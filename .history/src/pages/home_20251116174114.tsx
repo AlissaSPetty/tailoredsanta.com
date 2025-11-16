@@ -1,0 +1,18 @@
+import * as React from "react"
+import type { HeadFC, PageProps } from "gatsby"
+
+const pageStyles = {
+  color: "#FFD2E1",
+  padding: 96,
+  fontFamily: "-apple-system, Roboto, sans-serif, serif",
+}
+
+const HomePage: React.FC<PageProps> = () => {
+  return (
+    <main style={pageStyles}>
+      <img src="src/images/tailored-santa-banner.png" alt="Tailored Santa Banner" />
+    </main>
+  )
+}
+
+export default HomePage
