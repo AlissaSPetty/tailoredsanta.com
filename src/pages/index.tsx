@@ -46,10 +46,13 @@ const Header = styled.header`
 
 const HeaderInner = styled(Container)`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   min-height: 68px;
-  gap: 16px;
+  gap: 10px 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 `
 
 const Wordmark = styled.a`
@@ -67,21 +70,24 @@ const Wordmark = styled.a`
 
 const Nav = styled.nav`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 22px;
+  justify-content: flex-end;
+  gap: 10px 22px;
 
   a {
     color: var(--ink);
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
+    white-space: nowrap;
 
     &:hover {
       color: var(--evergreen);
     }
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: 880px) {
     a:not(.cta) {
       display: none;
     }
