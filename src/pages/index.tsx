@@ -9,7 +9,7 @@ import banner from "../images/tailored-santa-banner-transparent.png"
 /* ------------------------------------------------------------------ */
 
 const Page = styled.main`
-  overflow-x: hidden;
+  overflow-x: clip;
 `
 
 const Container = styled.div`
@@ -17,6 +17,10 @@ const Container = styled.div`
   max-width: 1080px;
   margin: 0 auto;
   padding: 0 24px;
+
+  @media (max-width: 480px) {
+    padding: 0 16px;
+  }
 `
 
 const Section = styled.section`
@@ -55,6 +59,10 @@ const Wordmark = styled.a`
   color: var(--evergreen);
   text-decoration: none;
   white-space: nowrap;
+
+  @media (max-width: 480px) {
+    font-size: 1.15rem;
+  }
 `
 
 const Nav = styled.nav`
@@ -96,6 +104,11 @@ const Button = styled.a`
   &:hover {
     transform: translateY(-2px);
     background: var(--brand-red-dark);
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px 16px;
+    font-size: 0.92rem;
   }
 `
 

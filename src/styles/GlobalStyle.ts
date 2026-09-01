@@ -40,6 +40,11 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
   h1, h2, h3 {
     font-family: var(--display);
     font-weight: 500;
