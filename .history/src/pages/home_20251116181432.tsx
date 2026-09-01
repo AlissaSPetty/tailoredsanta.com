@@ -6,7 +6,6 @@ const pageStyles = {
   height: "100vh",
   fontFamily: "Bright, sans-serif",
   src: `url('/src/fonts/Bright.otf') format('opentype')`,
-  padding: "2rem",
 }
 
   const headingStyles = {

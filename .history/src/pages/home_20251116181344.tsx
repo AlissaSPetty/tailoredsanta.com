@@ -6,7 +6,6 @@ const pageStyles = {
   height: "100vh",
   fontFamily: "Bright, sans-serif",
   src: `url('/src/fonts/Bright.otf') format('opentype')`,
-  padding: "2rem",
 }
 
   const headingStyles = {
@@ -46,8 +45,7 @@ const HomePage: React.FC<PageProps> = () => {
         </ul>
         </p>
       <p style={paragraphStyles}>Book Lonnie Taylor as your Santa today and give your event the gift of a truly personalized and magical holiday experience!</p>
-      <button onClick={() => window.location.href = 'https://tailoredsanta.bookerbee.com'}
-       style={paragraphStyles}>Book Now</button>
+      <button style={paragraphStyles}>Book Now</button>
 
     </main>
   )
