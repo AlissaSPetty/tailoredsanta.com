@@ -1,193 +1,731 @@
 import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
+import styled from "styled-components"
+import { GlobalStyle } from "../styles/GlobalStyle"
+import banner from "../images/tailored-santa-banner-transparent.png"
 
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
-const headingAccentStyles = {
-  color: "#663399",
-}
-const paragraphStyles = {
-  marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-const listStyles = {
-  marginBottom: 96,
-  paddingLeft: 0,
-}
-const doclistStyles = {
-  paddingLeft: 0,
-}
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 30,
-}
+/* ------------------------------------------------------------------ */
+/* Layout primitives                                                   */
+/* ------------------------------------------------------------------ */
 
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%",
-}
+const Page = styled.main`
+  overflow-x: hidden;
+`
 
-const docLinkStyle = {
-  ...linkStyle,
-  listStyleType: "none",
-  display: `inline-block`,
-  marginBottom: 24,
-  marginRight: 12,
-}
+const Container = styled.div`
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+`
 
-const descriptionStyle = {
-  color: "#232129",
-  fontSize: 14,
-  marginTop: 10,
-  marginBottom: 0,
-  lineHeight: 1.25,
-}
+const Section = styled.section`
+  padding: 72px 0;
 
-const docLinks = [
-  {
-    text: "TypeScript Documentation",
-    url: "https://www.gatsbyjs.com/docs/how-to/custom-configuration/typescript/",
-    color: "#8954A8",
-  },
-  {
-    text: "GraphQL Typegen Documentation",
-    url: "https://www.gatsbyjs.com/docs/how-to/local-development/graphql-typegen/",
-    color: "#8954A8",
+  @media (max-width: 640px) {
+    padding: 52px 0;
   }
+`
+
+/* ------------------------------------------------------------------ */
+/* Header                                                              */
+/* ------------------------------------------------------------------ */
+
+const Header = styled.header`
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(8px);
+  background: rgba(253, 248, 238, 0.85);
+  border-bottom: 1px solid rgba(20, 80, 50, 0.15);
+`
+
+const HeaderInner = styled(Container)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 68px;
+  gap: 16px;
+`
+
+const Wordmark = styled.a`
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.35rem;
+  color: var(--evergreen);
+  text-decoration: none;
+  white-space: nowrap;
+`
+
+const Nav = styled.nav`
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+
+    &:hover {
+      color: var(--evergreen);
+    }
+  }
+
+  @media (max-width: 720px) {
+    a:not(.cta) {
+      display: none;
+    }
+  }
+`
+
+const Button = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--brand-red);
+  color: #fff !important;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    background: var(--brand-red-dark);
+  }
+`
+
+const ButtonGhost = styled(Button)`
+  background: transparent;
+  color: var(--brand-red) !important;
+  box-shadow: none;
+  border: 2px solid var(--brand-red);
+
+  &:hover {
+    background: rgba(223, 7, 20, 0.08);
+    color: var(--brand-red) !important;
+  }
+`
+
+/* ------------------------------------------------------------------ */
+/* Hero                                                                */
+/* ------------------------------------------------------------------ */
+
+const Hero = styled.section`
+  background: linear-gradient(180deg, var(--mist) 0%, var(--paper) 100%);
+  text-align: center;
+  padding: 56px 0 64px;
+`
+
+const BannerImg = styled.img`
+  width: min(560px, 90%);
+  height: auto;
+  margin: 0 auto 8px;
+  display: block;
+`
+
+const Tagline = styled.h1`
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  margin: 12px 0 8px;
+`
+
+const Sub = styled.p`
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  color: var(--ink-soft);
+  max-width: 620px;
+  margin: 0 auto 28px;
+`
+
+const HeroActions = styled.div`
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+`
+
+/* ------------------------------------------------------------------ */
+/* Trust bar                                                           */
+/* ------------------------------------------------------------------ */
+
+const TrustBar = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 34px;
+`
+
+const Pill = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid rgba(20, 80, 50, 0.2);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px -12px rgba(20, 50, 32, 0.5);
+`
+
+/* ------------------------------------------------------------------ */
+/* Generic section heading                                             */
+/* ------------------------------------------------------------------ */
+
+const Kicker = styled.p`
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--gold);
+  margin: 0 0 10px;
+`
+
+const SectionTitle = styled.h2`
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 14px;
+`
+
+const Lead = styled.p`
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  max-width: 640px;
+`
+
+/* ------------------------------------------------------------------ */
+/* About                                                               */
+/* ------------------------------------------------------------------ */
+
+const About = styled(Section)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+
+  @media (max-width: 820px) {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+`
+
+const AboutCard = styled.div`
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(20, 80, 50, 0.12);
+`
+
+/* ------------------------------------------------------------------ */
+/* Reassurance / trust cards                                           */
+/* ------------------------------------------------------------------ */
+
+const Ease = styled(Section)`
+  background: var(--evergreen);
+
+  h2 {
+    color: #fff;
+  }
+
+  ${Lead} {
+    color: rgba(255, 255, 255, 0.82);
+  }
+`
+
+const CardGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 22px;
+  margin-top: 34px;
+`
+
+const Card = styled.div`
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 26px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(20, 80, 50, 0.12);
+
+  h3 {
+    font-family: "Inter", sans-serif;
+    font-size: 1.15rem;
+    color: var(--brand-red-dark);
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+`
+
+const CardIcon = styled.div`
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+`
+
+/* ------------------------------------------------------------------ */
+/* Steps                                                               */
+/* ------------------------------------------------------------------ */
+
+const Steps = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 34px;
+  counter-reset: step;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const Step = styled.div`
+  position: relative;
+  padding: 26px 24px 24px;
+  background: var(--mist);
+  border-radius: 20px;
+  border: 1px dashed rgba(20, 80, 50, 0.35);
+
+  &::before {
+    counter-increment: step;
+    content: counter(step);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--brand-red);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+  }
+
+  h3 {
+    font-family: "Inter", sans-serif;
+    font-size: 1.1rem;
+    color: var(--brand-red-dark);
+    margin-bottom: 6px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+`
+
+/* ------------------------------------------------------------------ */
+/* Inquiry form                                                        */
+/* ------------------------------------------------------------------ */
+
+const Inquire = styled(Section)`
+  background: linear-gradient(180deg, var(--paper) 0%, var(--mist) 100%);
+`
+
+const FormCard = styled.div`
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 36px;
+  box-shadow: var(--shadow);
+  max-width: 720px;
+  margin: 28px auto 0;
+  border: 1px solid rgba(20, 80, 50, 0.14);
+
+  @media (max-width: 560px) {
+    padding: 24px;
+  }
+`
+
+const Form = styled.form`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const Field = styled.label<{ $full?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--ink);
+  grid-column: ${(p) => (p.$full ? "1 / -1" : "auto")};
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+    font-weight: 400;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(56, 42, 45, 0.25);
+    background: #fff;
+    color: var(--ink);
+
+    &:focus {
+      border-color: var(--brand-red);
+      outline: none;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 110px;
+  }
+`
+
+const Submit = styled.button`
+  grid-column: 1 / -1;
+  justify-self: start;
+  background: var(--brand-red);
+  color: #fff;
+  border: none;
+  font: inherit;
+  font-weight: 700;
+  padding: 14px 30px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    background: var(--brand-red-dark);
+  }
+`
+
+const FormNote = styled.p`
+  text-align: center;
+  color: var(--ink-soft);
+  margin: 18px 0 0;
+  font-size: 0.95rem;
+
+  a {
+    font-weight: 700;
+  }
+`
+
+/* ------------------------------------------------------------------ */
+/* Footer                                                              */
+/* ------------------------------------------------------------------ */
+
+const Footer = styled.footer`
+  background: var(--evergreen-dark);
+  color: #fff;
+  text-align: center;
+  padding: 40px 0;
+
+  a {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 6px 0;
+  }
+`
+
+/* ------------------------------------------------------------------ */
+/* Data                                                                */
+/* ------------------------------------------------------------------ */
+
+const trustPills = [
+  "🛡️ Background-checked",
+  "🧸 Great with children",
+  "🐾 Pet-friendly",
+  "🤟 ASL fluent",
+  "♿ Special-needs friendly",
 ]
 
-const badgeStyle = {
-  color: "#fff",
-  backgroundColor: "#088413",
-  border: "1px solid #088413",
-  fontSize: 11,
-  fontWeight: "bold",
-  letterSpacing: 1,
-  borderRadius: 4,
-  padding: "4px 6px",
-  display: "inline-block",
-  position: "relative" as "relative",
-  top: -2,
-  marginLeft: 10,
-  lineHeight: 1,
-}
-
-const links = [
+const reassurances = [
   {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial/getting-started/",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-    color: "#E95800",
+    icon: "🛡️",
+    title: "Safe & vetted",
+    body: "Lonnie is background-checked and follows clear, professional conduct guidelines. References are available on request so you can book with total confidence.",
   },
   {
-    text: "How to Guides",
-    url: "https://www.gatsbyjs.com/docs/how-to/",
-    description:
-      "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-    color: "#1099A8",
+    icon: "🧸",
+    title: "Gentle with children",
+    body: "Patient, calm, and sensory-aware, Lonnie meets every child at their pace — from shy toddlers to excited big kids — so photos feel joyful, never rushed.",
   },
   {
-    text: "Reference Guides",
-    url: "https://www.gatsbyjs.com/docs/reference/",
-    description:
-      "Nitty-gritty technical descriptions of how Gatsby works. Most useful when you need detailed information about Gatsby's APIs.",
-    color: "#BC027F",
+    icon: "🐾",
+    title: "Wonderful with pets",
+    body: "Dogs, cats, and furry family members are welcome. Lonnie is relaxed and comfortable around pets, making holiday photos with the whole family easy.",
   },
   {
-    text: "Conceptual Guides",
-    url: "https://www.gatsbyjs.com/docs/conceptual/",
-    description:
-      "Big-picture explanations of higher-level Gatsby concepts. Most useful for building understanding of a particular topic.",
-    color: "#0D96F2",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#8EB814",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    badge: true,
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-    color: "#663399",
+    icon: "🤟",
+    title: "Inclusive by design",
+    body: "Certified in American Sign Language and comfortable working with wheelchairs and sensory needs, so every child feels fully included in the magic.",
   },
 ]
+
+const steps = [
+  {
+    title: "Send an inquiry",
+    body: "Tell us your date, location, and what you have in mind. It only takes a minute.",
+  },
+  {
+    title: "We confirm the details",
+    body: "We'll reply with availability, pricing, and answers to any questions about your visit.",
+  },
+  {
+    title: "Lonnie brings the magic",
+    body: "Sit back and enjoy warm, unforgettable moments and beautiful holiday photos.",
+  },
+]
+
+/* ------------------------------------------------------------------ */
+/* Page                                                                */
+/* ------------------------------------------------------------------ */
 
 const IndexPage: React.FC<PageProps> = () => {
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>
-        Congratulations
-        <br />
-        <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
-      </h1>
-      <p style={paragraphStyles}>
-        Edit <code style={codeStyles}>src/pages/index.tsx</code> to see this page
-        update in real-time. 😎
-      </p>
-      <ul style={doclistStyles}>
-        {docLinks.map(doc => (
-          <li key={doc.url} style={docLinkStyle}>
-            <a
-              style={linkStyle}
-              href={`${doc.url}?utm_source=starter&utm_medium=ts-docs&utm_campaign=minimal-starter-ts`}
-            >
-              {doc.text}
+    <Page>
+      <GlobalStyle />
+
+      <Header>
+        <HeaderInner as="div">
+          <Wordmark href="#top">Tailored&nbsp;Santa</Wordmark>
+          <Nav>
+            <a href="#about">Meet Lonnie</a>
+            <a href="#ease">Why families trust us</a>
+            <a href="#how">How it works</a>
+            <a className="cta" href="#inquire">
+              <Button as="span">Request a booking</Button>
             </a>
-          </li>
-        ))}
-      </ul>
-      <ul style={listStyles}>
-        {links.map(link => (
-          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
-            <span>
-              <a
-                style={linkStyle}
-                href={`${link.url}?utm_source=starter&utm_medium=start-page&utm_campaign=minimal-starter-ts`}
-              >
-                {link.text}
+          </Nav>
+        </HeaderInner>
+      </Header>
+
+      <Hero id="top">
+        <Container>
+          <BannerImg src={banner} alt="Tailored Santa — Experiences & Events" />
+          <Tagline>Custom-fit Santa visits, booked in a click.</Tagline>
+          <Sub>
+            Warm, professional, and inclusive Santa experiences for photo
+            sessions, home visits, and events — thoughtfully tailored to every
+            child, family, and pet.
+          </Sub>
+          <HeroActions>
+            <Button href="#inquire">Request a booking 🎅</Button>
+            <ButtonGhost href="#about">Meet Lonnie</ButtonGhost>
+          </HeroActions>
+          <TrustBar>
+            {trustPills.map((p) => (
+              <Pill key={p}>{p}</Pill>
+            ))}
+          </TrustBar>
+        </Container>
+      </Hero>
+
+      <Container>
+        <About id="about">
+          <div>
+            <Kicker>Meet your Santa</Kicker>
+            <SectionTitle>Say hello to Lonnie Taylor</SectionTitle>
+            <p>
+              Lonnie is one of Santa's special helpers, and he can't wait to
+              bring his boundless Christmas cheer to your next event. Whether
+              it's a bustling mall, a cozy home visit, a photo session, or a
+              community gathering, Lonnie adapts seamlessly to any holiday
+              setting.
+            </p>
+            <p>
+              What makes Lonnie truly special is his dedication to
+              inclusivity — making sure <strong>every</strong> child, and every
+              pet, feels the wonder of the season in a calm, welcoming way.
+            </p>
+            <HeroActions style={{ justifyContent: "flex-start", marginTop: 22 }}>
+              <Button href="#inquire">Check Lonnie's availability</Button>
+            </HeroActions>
+          </div>
+          <AboutCard>
+            <Kicker style={{ color: "var(--brand-red)" }}>At a glance</Kicker>
+            <ul style={{ margin: 0, paddingLeft: 20, lineHeight: 2 }}>
+              <li>Photo sessions, home visits &amp; events</li>
+              <li>Certified in American Sign Language</li>
+              <li>Comfortable with sensory needs &amp; wheelchairs</li>
+              <li>Relaxed and gentle around pets</li>
+              <li>Background-checked &amp; professional</li>
+            </ul>
+          </AboutCard>
+        </About>
+      </Container>
+
+      <Ease id="ease">
+        <Container>
+          <Kicker>Book with confidence</Kicker>
+          <SectionTitle>Why families feel at ease</SectionTitle>
+          <Lead>
+            Inviting someone to spend time with your children and pets is a big
+            deal. Here's how Lonnie earns that trust before he ever knocks on
+            your door.
+          </Lead>
+          <CardGrid>
+            {reassurances.map((r) => (
+              <Card key={r.title}>
+                <CardIcon>{r.icon}</CardIcon>
+                <h3>{r.title}</h3>
+                <p>{r.body}</p>
+              </Card>
+            ))}
+          </CardGrid>
+        </Container>
+      </Ease>
+
+      <Container>
+        <Section id="how">
+          <Kicker>Simple &amp; stress-free</Kicker>
+          <SectionTitle>How it works</SectionTitle>
+          <Lead>Booking Lonnie takes three easy steps.</Lead>
+          <Steps>
+            {steps.map((s) => (
+              <Step key={s.title}>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </Step>
+            ))}
+          </Steps>
+        </Section>
+      </Container>
+
+      <Inquire id="inquire">
+        <Container>
+          <div style={{ textAlign: "center" }}>
+            <Kicker>Let's make some magic</Kicker>
+            <SectionTitle>Request a booking</SectionTitle>
+            <Lead style={{ margin: "0 auto" }}>
+              Share a few details and we'll get right back to you with
+              availability and pricing. No obligation — just a friendly hello.
+            </Lead>
+          </div>
+
+          <FormCard>
+            {/* Works out of the box on Netlify (this site's deploy target).
+                Swap for your preferred form/email handler if hosting elsewhere. */}
+            <Form
+              name="booking-inquiry"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              action="/?inquiry=received"
+            >
+              <input type="hidden" name="form-name" value="booking-inquiry" />
+              <p hidden>
+                <label>
+                  Leave this empty: <input name="bot-field" />
+                </label>
+              </p>
+
+              <Field>
+                Your name
+                <input type="text" name="name" autoComplete="name" required />
+              </Field>
+              <Field>
+                Email
+                <input type="email" name="email" autoComplete="email" required />
+              </Field>
+              <Field>
+                Phone (optional)
+                <input type="tel" name="phone" autoComplete="tel" />
+              </Field>
+              <Field>
+                Preferred date
+                <input type="date" name="event_date" />
+              </Field>
+              <Field $full>
+                What are you planning?
+                <select name="event_type" defaultValue="">
+                  <option value="" disabled>
+                    Choose one…
+                  </option>
+                  <option>Photo session</option>
+                  <option>Home visit</option>
+                  <option>Community / mall event</option>
+                  <option>Pet-friendly photos</option>
+                  <option>Something else</option>
+                </select>
+              </Field>
+              <Field $full>
+                Will pets be present?
+                <select name="pets" defaultValue="">
+                  <option value="" disabled>
+                    Let us know…
+                  </option>
+                  <option>No pets</option>
+                  <option>Yes — dog(s)</option>
+                  <option>Yes — cat(s)</option>
+                  <option>Yes — other pets</option>
+                </select>
+              </Field>
+              <Field $full>
+                Anything else we should know?
+                <textarea
+                  name="message"
+                  placeholder="Ages of children, accessibility or sensory needs, location, timing…"
+                />
+              </Field>
+              <Submit type="submit">Send my inquiry 🎄</Submit>
+            </Form>
+
+            <FormNote>
+              Prefer email? Reach us at{" "}
+              <a href="mailto:hello@tailoredsanta.com">
+                hello@tailoredsanta.com
               </a>
-              {link.badge && (
-                <span style={badgeStyle} aria-label="New Badge">
-                  NEW!
-                </span>
-              )}
-              <p style={descriptionStyle}>{link.description}</p>
-            </span>
-          </li>
-        ))}
-      </ul>
-      <img
-        alt="Gatsby G Logo"
-        src="data:image/svg+xml,%3Csvg width='24' height='24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a10 10 0 110 20 10 10 0 010-20zm0 2c-3.73 0-6.86 2.55-7.75 6L14 19.75c3.45-.89 6-4.02 6-7.75h-5.25v1.5h3.45a6.37 6.37 0 01-3.89 4.44L6.06 9.69C7 7.31 9.3 5.63 12 5.63c2.13 0 4 1.04 5.18 2.65l1.23-1.06A7.959 7.959 0 0012 4zm-8 8a8 8 0 008 8c.04 0 .09 0-8-8z' fill='%23639'/%3E%3C/svg%3E"
-      />
-    </main>
+              .
+            </FormNote>
+          </FormCard>
+        </Container>
+      </Inquire>
+
+      <Footer>
+        <Container>
+          <p style={{ fontFamily: "var(--display)", fontWeight: 600, fontSize: "1.4rem" }}>
+            Tailored Santa
+          </p>
+          <p>Custom-fit Santa visits, booked in a click.</p>
+          <p>
+            <a href="mailto:hello@tailoredsanta.com">hello@tailoredsanta.com</a>
+          </p>
+          <p style={{ opacity: 0.85, fontSize: "0.85rem" }}>
+            © {new Date().getFullYear()} tailoredsanta.com · Experiences &amp;
+            Events
+          </p>
+        </Container>
+      </Footer>
+    </Page>
   )
 }
 
 export default IndexPage
 
-export const Head: HeadFC = () => <title>Home Page</title>
+export const Head: HeadFC = () => (
+  <>
+    <html lang="en" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Tailored Santa — Book an inclusive, pet-friendly Santa for photos & events</title>
+    <meta
+      name="description"
+      content="Book Lonnie Taylor, a warm, background-checked, ASL-fluent Santa for photo sessions, home visits, and events. Gentle with children and pets, and thoughtfully inclusive."
+    />
+    <meta name="theme-color" content="#df0714" />
+  </>
+)
