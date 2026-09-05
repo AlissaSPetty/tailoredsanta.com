@@ -435,6 +435,26 @@ const FormNote = styled.p`
   }
 `
 
+const ThankYou = styled.div`
+  text-align: center;
+  padding: 24px 0;
+
+  .icon {
+    font-size: 2.5rem;
+  }
+
+  h3 {
+    font-family: var(--display);
+    color: var(--evergreen);
+    margin: 12px 0 8px;
+  }
+
+  p {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+`
+
 /* ------------------------------------------------------------------ */
 /* Footer                                                              */
 /* ------------------------------------------------------------------ */
@@ -510,6 +530,14 @@ const steps = [
 /* ------------------------------------------------------------------ */
 
 const IndexPage: React.FC<PageProps> = () => {
+  const [submitted, setSubmitted] = React.useState(false)
+
+  React.useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("inquiry") === "received") {
+      setSubmitted(true)
+    }
+  }, [])
+
   return (
     <Page>
       <GlobalStyle />
@@ -632,80 +660,97 @@ const IndexPage: React.FC<PageProps> = () => {
           </div>
 
           <FormCard>
-            {/* Works out of the box on Netlify (this site's deploy target).
-                Swap for your preferred form/email handler if hosting elsewhere. */}
-            <Form
-              name="booking-inquiry"
-              method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field"
-              action="/?inquiry=received"
-            >
-              <input type="hidden" name="form-name" value="booking-inquiry" />
-              <p hidden>
-                <label>
-                  Leave this empty: <input name="bot-field" />
-                </label>
-              </p>
+            {submitted ? (
+              <ThankYou>
+                <div className="icon">🎅✅</div>
+                <h3>Thanks — your inquiry is in!</h3>
+                <p>
+                  We'll get back to you shortly with availability and
+                  pricing. Prefer email? Reach us at{" "}
+                  <a href="mailto:hello@tailoredsanta.com">
+                    hello@tailoredsanta.com
+                  </a>
+                  .
+                </p>
+              </ThankYou>
+            ) : (
+              <>
+                {/* Works out of the box on Netlify (this site's deploy target).
+                    Swap for your preferred form/email handler if hosting elsewhere. */}
+                <Form
+                  name="booking-inquiry"
+                  method="POST"
+                  data-netlify="true"
+                  netlify-honeypot="bot-field"
+                  action="/?inquiry=received"
+                >
+                  <input type="hidden" name="form-name" value="booking-inquiry" />
+                  <p hidden>
+                    <label>
+                      Leave this empty: <input name="bot-field" />
+                    </label>
+                  </p>
 
-              <Field>
-                Your name
-                <input type="text" name="name" autoComplete="name" required />
-              </Field>
-              <Field>
-                Email
-                <input type="email" name="email" autoComplete="email" required />
-              </Field>
-              <Field>
-                Phone (optional)
-                <input type="tel" name="phone" autoComplete="tel" />
-              </Field>
-              <Field>
-                Preferred date
-                <input type="date" name="event_date" />
-              </Field>
-              <Field $full>
-                What are you planning?
-                <select name="event_type" defaultValue="">
-                  <option value="" disabled>
-                    Choose one…
-                  </option>
-                  <option>Photo session</option>
-                  <option>Home visit</option>
-                  <option>Community / mall event</option>
-                  <option>Pet-friendly photos</option>
-                  <option>Something else</option>
-                </select>
-              </Field>
-              <Field $full>
-                Will pets be present?
-                <select name="pets" defaultValue="">
-                  <option value="" disabled>
-                    Let us know…
-                  </option>
-                  <option>No pets</option>
-                  <option>Yes — dog(s)</option>
-                  <option>Yes — cat(s)</option>
-                  <option>Yes — other pets</option>
-                </select>
-              </Field>
-              <Field $full>
-                Anything else we should know?
-                <textarea
-                  name="message"
-                  placeholder="Ages of children, accessibility or sensory needs, location, timing…"
-                />
-              </Field>
-              <Submit type="submit">Send my inquiry 🎄</Submit>
-            </Form>
+                  <Field>
+                    Your name
+                    <input type="text" name="name" autoComplete="name" required />
+                  </Field>
+                  <Field>
+                    Email
+                    <input type="email" name="email" autoComplete="email" required />
+                  </Field>
+                  <Field>
+                    Phone (optional)
+                    <input type="tel" name="phone" autoComplete="tel" />
+                  </Field>
+                  <Field>
+                    Preferred date
+                    <input type="date" name="event_date" />
+                  </Field>
+                  <Field $full>
+                    What are you planning?
+                    <select name="event_type" defaultValue="">
+                      <option value="" disabled>
+                        Choose one…
+                      </option>
+                      <option>Photo session</option>
+                      <option>Home visit</option>
+                      <option>Community / mall event</option>
+                      <option>Pet-friendly photos</option>
+                      <option>Something else</option>
+                    </select>
+                  </Field>
+                  <Field $full>
+                    Will pets be present?
+                    <select name="pets" defaultValue="">
+                      <option value="" disabled>
+                        Let us know…
+                      </option>
+                      <option>No pets</option>
+                      <option>Yes — dog(s)</option>
+                      <option>Yes — cat(s)</option>
+                      <option>Yes — other pets</option>
+                    </select>
+                  </Field>
+                  <Field $full>
+                    Anything else we should know?
+                    <textarea
+                      name="message"
+                      placeholder="Ages of children, accessibility or sensory needs, location, timing…"
+                    />
+                  </Field>
+                  <Submit type="submit">Send my inquiry 🎄</Submit>
+                </Form>
 
-            <FormNote>
-              Prefer email? Reach us at{" "}
-              <a href="mailto:hello@tailoredsanta.com">
-                hello@tailoredsanta.com
-              </a>
-              .
-            </FormNote>
+                <FormNote>
+                  Prefer email? Reach us at{" "}
+                  <a href="mailto:hello@tailoredsanta.com">
+                    hello@tailoredsanta.com
+                  </a>
+                  .
+                </FormNote>
+              </>
+            )}
           </FormCard>
         </Container>
       </Inquire>
