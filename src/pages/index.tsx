@@ -2,7 +2,7 @@ import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
 import styled from "styled-components"
 import { GlobalStyle } from "../styles/GlobalStyle"
-import banner from "../images/tailored-santa-banner-transparent.png"
+import Logo from "../components/Logo"
 
 /* ------------------------------------------------------------------ */
 /* Layout primitives                                                   */
@@ -55,17 +55,20 @@ const HeaderInner = styled(Container)`
   padding-bottom: 12px;
 `
 
-const Wordmark = styled.a`
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 1.35rem;
-  color: var(--evergreen);
-  text-decoration: none;
-  white-space: nowrap;
+const HeaderLogo = styled(Logo)`
+  height: 55px;
+  width: auto;
 
   @media (max-width: 480px) {
-    font-size: 1.15rem;
+    height: 45px;
   }
+`
+
+const HeaderLogoLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
 `
 
 const Nav = styled.nav`
@@ -140,11 +143,10 @@ const Hero = styled.section`
   padding: 56px 0 64px;
 `
 
-const BannerImg = styled.img`
-  width: min(560px, 90%);
+const HeroLogo = styled(Logo)`
+  width: min(525px, 90%);
   height: auto;
-  margin: 0 auto 8px;
-  display: block;
+  margin: 0 auto 24px;
 `
 
 const Tagline = styled.h1`
@@ -555,7 +557,9 @@ const IndexPage: React.FC<PageProps> = () => {
 
       <Header>
         <HeaderInner as="div">
-          <Wordmark href="#top">Tailored&nbsp;Santa</Wordmark>
+          <HeaderLogoLink href="#top" aria-label="Tailored Santa — Home">
+            <HeaderLogo />
+          </HeaderLogoLink>
           <Nav>
             <a href="#about">Meet Lonnie</a>
             <a href="#ease">Why families trust us</a>
@@ -569,7 +573,7 @@ const IndexPage: React.FC<PageProps> = () => {
 
       <Hero id="top">
         <Container>
-          <BannerImg src={banner} alt="Tailored Santa — Experiences & Events" />
+          <HeroLogo />
           <Tagline>Custom-fit Santa visits, booked in a click.</Tagline>
           <Sub>
             Warm, professional, and inclusive Santa experiences for photo
