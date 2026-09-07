@@ -807,5 +807,14 @@ export const Head: HeadFC = () => (
       content="Book Lonnie Taylor, a warm, background-checked, ASL-fluent Santa for photo sessions, home visits, and events. Gentle with children and pets, and thoughtfully inclusive."
     />
     <meta name="theme-color" content="#df0714" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tailored Santa" />
+    <meta property="og:title" content="Tailored Santa — Custom-fit Santa visits, booked in a click." />
+    <meta property="og:description" content="Warm, inclusive Santa experiences for photo sessions, home visits, and events. Background-checked, ASL-fluent, and pet-friendly." />
+    <meta property="og:image" content="https://tailoredsanta.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://tailoredsanta.com/og-image.png" />
   </>
 )
