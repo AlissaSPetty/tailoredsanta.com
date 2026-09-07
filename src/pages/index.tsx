@@ -240,6 +240,17 @@ const AboutCard = styled.div`
   border: 1px solid rgba(20, 80, 50, 0.12);
 `
 
+const AboutPhoto = styled.img`
+  width: 100%;
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  border: 8px solid var(--evergreen);
+  display: block;
+  object-fit: cover;
+  object-position: top;
+  max-height: 520px;
+`
+
 /* ------------------------------------------------------------------ */
 /* Reassurance / trust cards                                           */
 /* ------------------------------------------------------------------ */
@@ -594,20 +605,21 @@ const IndexPage: React.FC<PageProps> = () => {
               inclusivity — making sure <strong>every</strong> child, and every
               pet, feels the wonder of the season in a calm, welcoming way.
             </p>
-            <HeroActions style={{ justifyContent: "flex-start", marginTop: 22 }}>
+            <AboutCard style={{ marginTop: 22 }}>
+              <Kicker style={{ color: "var(--brand-red)" }}>At a glance</Kicker>
+              <ul style={{ margin: 0, paddingLeft: 20, lineHeight: 2 }}>
+                <li>Photo sessions, home visits &amp; events</li>
+                <li>Certified in American Sign Language</li>
+                <li>Comfortable with sensory needs &amp; wheelchairs</li>
+                <li>Relaxed and gentle around pets</li>
+                <li>Background-checked &amp; professional</li>
+              </ul>
+            </AboutCard>
+            <HeroActions style={{ justifyContent: "center", marginTop: 24 }}>
               <Button href="#inquire">Check Lonnie's availability</Button>
             </HeroActions>
           </div>
-          <AboutCard>
-            <Kicker style={{ color: "var(--brand-red)" }}>At a glance</Kicker>
-            <ul style={{ margin: 0, paddingLeft: 20, lineHeight: 2 }}>
-              <li>Photo sessions, home visits &amp; events</li>
-              <li>Certified in American Sign Language</li>
-              <li>Comfortable with sensory needs &amp; wheelchairs</li>
-              <li>Relaxed and gentle around pets</li>
-              <li>Background-checked &amp; professional</li>
-            </ul>
-          </AboutCard>
+          <AboutPhoto src="/lonnie-portrait.png" alt="Lonnie Taylor as Santa Claus" />
         </About>
       </Container>
 
