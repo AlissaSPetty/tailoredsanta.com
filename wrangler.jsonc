@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Must match the Worker name in the Cloudflare dashboard.
+  "name": "tailoredsanta-com",
+  "compatibility_date": "2026-10-01",
+  // Static Gatsby build output, served by Workers Static Assets.
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}

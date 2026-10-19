@@ -42,8 +42,12 @@
     - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
     - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
 
-## 🚀 Quick start (Netlify)
+## ☁️ Deploying (Cloudflare)
 
-Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
+The site is deployed as a Cloudflare Worker with static assets (see `wrangler.jsonc`).
+Pushing to `main` triggers a build and deploy through Cloudflare's Git integration:
 
-[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-minimal-ts)
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+
+To deploy manually: `npm run deploy`.

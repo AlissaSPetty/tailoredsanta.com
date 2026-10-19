@@ -691,8 +691,8 @@ const IndexPage: React.FC<PageProps> = () => {
               </ThankYou>
             ) : (
               <>
-                {/* Works out of the box on Netlify (this site's deploy target).
-                    Swap for your preferred form/email handler if hosting elsewhere. */}
+                {/* TODO: Netlify Forms markup — doesn't work on Cloudflare.
+                    Needs a form/email handler (e.g. a Worker route). */}
                 <Form
                   name="booking-inquiry"
                   method="POST"
