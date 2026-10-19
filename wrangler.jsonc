@@ -2,10 +2,20 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   // Must match the Worker name in the Cloudflare dashboard.
   "name": "tailoredsanta-com",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-10-01",
   // Static Gatsby build output, served by Workers Static Assets.
+  // Only /api/* reaches the Worker code; everything else is served as a static file.
   "assets": {
     "directory": "./public",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  // Booking form emails, sent via Cloudflare Email Routing.
+  // Delivered to INQUIRY_TO, which Email Routing forwards like any other mail.
+  "send_email": [{ "name": "INQUIRY_EMAIL" }],
+  "vars": {
+    "INQUIRY_TO": "hello@tailoredsanta.com"
   }
 }

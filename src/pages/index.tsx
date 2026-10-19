@@ -691,16 +691,12 @@ const IndexPage: React.FC<PageProps> = () => {
               </ThankYou>
             ) : (
               <>
-                {/* TODO: Netlify Forms markup — doesn't work on Cloudflare.
-                    Needs a form/email handler (e.g. a Worker route). */}
+                {/* Handled by the Cloudflare Worker in worker/index.ts. */}
                 <Form
                   name="booking-inquiry"
                   method="POST"
-                  data-netlify="true"
-                  netlify-honeypot="bot-field"
-                  action="/?inquiry=received"
+                  action="/api/inquiry"
                 >
-                  <input type="hidden" name="form-name" value="booking-inquiry" />
                   <p hidden>
                     <label>
                       Leave this empty: <input name="bot-field" />
